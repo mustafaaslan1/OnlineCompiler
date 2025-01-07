@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Compiler</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.14.0/ace.js"></script> <!-- Ace Editor JS Kodu -->
+</head>
+
+<body>
+    <center>
+        <h1>Online Compiler</h1>
+        <form id="myform" name="myform">
+            <div class="main-container">
+                <div class="code-section">
+                    <h3>Code</h3>
+                    <div id="editor" style="height: 400px; width: 100%;"></div>
+                </div>
+                <div class="input-output-section">
+                    <h3>Input</h3>
+                    <div class="input-container">
+                        <textarea rows="3" cols="100" id="input" name="input"
+                            placeholder="Enter input if required..."></textarea>
+                        <div class="use-input">
+                            Use Input: <input type="checkbox" id="inputRadio" name="inputRadio" value="true">
+                        </div>
+                    </div>
+                    <div class="output-container">
+                        <h3>Output</h3>
+                        <textarea rows="9" cols="100" id="output" name="output" readonly></textarea>    
+                    </div>
+
+                </div>
+            </div>
+            <div class="form-row">
+                <label for="lang">Language:</label>
+                <select name="lang" id="lang">
+                    <option value="C">C</option>
+                    <option value="C++">C++</option>
+                    <option value="Python">Python</option>
+                </select>
+
+                <label for="theme">Theme:</label>
+                <select name="theme" id="theme">
+                    <option value="monokai">Monokai</option>
+                    <option value="github">GitHub</option>
+                    <option value="solarized_light">Solarized Light</option>
+                    <option value="solarized_dark">Solarized Dark</option>
+                    <option value="dracula">Dracula</option>
+                </select>
+
+                <input type="submit" value="Run ▶" name="submit" />
+            </div>
+        </form>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const langSelect = document.getElementById("lang");
+                const themeSelect = document.getElementById("theme");
+                const outputTextarea = document.getElementById("output");
+                const form = document.getElementById("myform");
+
+                // Ace Editor
+                const editor = ace.edit("editor");
+                editor.setTheme("ace/theme/monokai");
+                editor.session.setMode("ace/mode/c_cpp"); // Varsayılan dil C olacak
+                editor.setValue(`#include <stdio.h>\n\nint main() {\n    printf("Hello world!\\n");\n    return 0;\n}`);
+                editor.setOptions({
+                    fontSize: "14px",
+                    showPrintMargin: false,
+                });
+
+                // Dil seçimi değiştirildiğinde tema ile kodu güncellesin
+                langSelect.addEventListener("change", () => {
+                    const selectedLang = langSelect.value;
+                    if (selectedLang === "C") {
+                        editor.session.setMode("ace/mode/c_cpp");
+                        editor.setValue(`#include <stdio.h>\n\nint main() {\n    printf("Hello world!\\n");\n    return 0;\n}`);
+                    } else if (selectedLang === "C++") {
+                        editor.session.setMode("ace/mode/c_cpp");
+                        editor.setValue(`#include <iostream>\n\nint main() {\n    std::cout << "Hello world!" << std::endl;\n    return 0;\n}`);
+                    } else if (selectedLang === "Python") {
+                        editor.session.setMode("ace/mode/python");
+                        editor.setValue(`print("Hello, World!")`);
+                    }
+                });
+
+                // Tema seçimi değiştirildiğinde temayı güncellesin
+                themeSelect.addEventListener("change", () => {
+                    const selectedTheme = themeSelect.value;
+                    editor.setTheme(`ace/theme/${selectedTheme}`);
+                });
+
+                // Form gönderimi
+                form.addEventListener("submit", function (event) {
+                    event.preventDefault();
+
+                    const data = {
+                        code: editor.getValue(),
+                        lang: langSelect.value,
+                        inputRadio: document.getElementById("inputRadio").checked.toString(),
+                        input: document.getElementById("input").value,
+                    };
+
+                    fetch("/compilecode", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(data)
+                    })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error("Network response was not ok");
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            outputTextarea.value = data.output;
+                        })
+                        .catch(error => {
+                            outputTextarea.value = `Error: ${error.message}`;
+                        });
+                });
+            });
+        </script>
+    </center>
+</body>
+
+</html>

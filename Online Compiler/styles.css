@@ -1,0 +1,176 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    margin-top: 10px;
+    font-family: Arial, sans-serif;
+    background-color: #011627;
+    color: #f0f6fc;
+}
+
+h1 {
+    padding-bottom: 15px;
+    color: #82aaff;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    background-color: #1e2a47;
+    padding-left: 150px;
+    padding-right: 150px;
+    padding-bottom: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 1100px;
+    height: 570px;
+    margin: 0 auto;
+    position: relative; 
+}
+
+textarea {
+    background-color: #011627;
+    color: #f0f6fc;
+    border: 1px solid #4d5b71;
+    border-radius: 4px;
+    padding: 10px;
+    font-family: 'Courier New', monospace;
+    font-size: 15px;
+    resize: none;
+    width: 100%;
+}
+
+textarea:focus {
+    outline: none;
+    border-color: #82aaff;
+}
+
+select {
+    background-color: #011627;
+    color: #f0f6fc;
+    border: 1px solid #4d5b71;
+    padding: 5px;
+    border-radius: 4px;
+    font-size: 15px;
+    height: 30px;
+    position: absolute;
+    top: 20px;
+    right: 235px;
+}
+
+label {
+    font-size: 16px;
+    color: #f0f6fc;
+    margin: 0px;
+    position: absolute;
+    top: 25px;
+    right: 330px;
+}
+
+input[type="submit"] {
+    background-color: #1eb980;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    position: absolute;
+    top: 18px;
+    right: 130px;
+}
+
+input[type="submit"]:hover {
+    background-color: #036e4c;
+}
+
+h3 {
+    margin: 70px 0 10px;
+    color: #f0f6fc;
+}
+
+.main-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    height: 1000px;
+}
+
+.code-section {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    height: 530px;
+}
+
+.code-section textarea {
+    flex-grow: 1;
+}
+
+.input-output-section {
+    width: 36%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: 95%;
+}
+
+.input-output-section textarea {
+    flex-grow: 1;
+}
+
+.output-container {
+    margin-top: -50px;
+}
+.output-container textarea {
+    height: 230px;
+}
+.use-input {
+    margin-top: 15px;
+    position: absolute;
+    top: 65px;
+    right: 130px;
+}
+
+#inputRadio {
+    width: 15px;
+    height: 15px;
+}
+
+.form-row {
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    gap: 25px;
+    margin-top: 50px;
+}
+
+.form-row label {
+    font-size: 16px;
+    font-family:'Courier New', Courier, monospace;
+    font-weight: bold;
+}
+
+input[type="submit"] {
+    margin-left: 0;
+}
+
+label[for="theme"], select#theme {
+    right: auto; 
+    left: 30px; 
+    position: absolute;
+}
+
+label[for="theme"] {
+    top: 25px; 
+}
+
+select#theme {
+    top: 20px;
+    left: 100px;
+} 
